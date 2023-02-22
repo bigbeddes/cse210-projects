@@ -4,14 +4,55 @@ class Program
 {
     static void Main(string[] args)
     {
-        string testString=$"Now the Lord had shown unto me, Abraham, the intelligences that were organized before the world was; and among all these there were many of the noble and great ones;And God saw these souls that they were good, and he stood in the midst of them, and he said: These I will make my rulers; for he stood among those that were spirits, and he saw that they were good; and he said unto me: Abraham, thou art one of them; thou wast chosen before thou wast born.";
-        Console.WriteLine(testString);
-        List<string> list = new List<string>();
-        string[] splittedStringArray = testString.Split(' ');
-        foreach (string stringInArray in splittedStringArray)
+        int userSelection=0;
+        Breathing breathing = new Breathing("Box-Breathing", "relax by walking you through breathing in and out slowly. Clear your mind and focus on your breathing");
+        Reflecting reflecting = new Reflecting("Reflecting", "reflect on times in your life when you have shown strength and resilience");
+        Listing listing = new Listing("Listing", "reflect on the good things in your life by having you list as many things as you can in a certain area");
+
+        do
         {
-            list.Add(stringInArray);
+            //User Menue
+            Console.WriteLine("1. Breathing Activity");
+            Console.WriteLine("2. Reflecting Activity");
+            Console.WriteLine("3. Listing Activity");
+            Console.WriteLine("4. Quit");
+            Console.Write("Please select the number of the Activity you would like to select: ");
+            userSelection = int.Parse(Console.ReadLine());
+
+            //Breathing Activity Selected
+            if(userSelection == 1)
+            {
+                breathing.BreathingIntro();
+                breathing.BreathingActivity();
+                breathing.BreathingConclusion();
+            }
+
+            //Reflecting Activity Selected
+            else if(userSelection == 2)
+            {                
+                reflecting.ReflectingIntro();
+                reflecting.ReflectingActivity();
+                reflecting.ReflectingConclusion();
+            }
+
+            //Listing Activity Selected
+            else if (userSelection == 3)
+            {
+                listing.ListingIntro();
+                listing.ListingActivity();
+                listing.ListingConclusion();
+            }
+
+            //Catch if number entered is out of Range
+            else if (userSelection < 0 || userSelection > 4)
+            {
+                Console.WriteLine("The number you entered is not a selectable option, please try again.");
+                breathing.CountDownAnimation(5);
+            }
+            Console.Clear();
         }
-        Console.WriteLine(list);
+
+        //Quit option Selected ends program.
+        while(userSelection!=4);
     }
 }
