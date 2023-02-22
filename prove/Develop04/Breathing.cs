@@ -15,6 +15,7 @@ public class Breathing : BaseActivity
     {
         Console.Write("Please enter how many seconds you would like each interval to last (Suggested between 3-6): ");
         _breathing = int.Parse(Console.ReadLine());
+        Console.Write("Begin in...");
         CountDownAnimation(5);
         DateTime startTime = DateTime.Now;
         DateTime futureTime = startTime.AddSeconds(GetDuration());
@@ -39,7 +40,7 @@ public class Breathing : BaseActivity
         }
         while(currentTime < futureTime);
     }
-    
+
     public void BreathingConclusion()
     {
         GetConclusion();

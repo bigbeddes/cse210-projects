@@ -36,6 +36,8 @@ public class Listing : BaseActivity
         //Randomly select a prompt selection
         Console.WriteLine("Please list as many responses as you can to the following question.");
         RandomListSelector(_listIndex, _listPrompts);
+        Console.Write("You may begin in...");
+        CountDownAnimation(5);
         
         DateTime startTime = DateTime.Now;
         DateTime futureTime = startTime.AddSeconds(GetDuration());
