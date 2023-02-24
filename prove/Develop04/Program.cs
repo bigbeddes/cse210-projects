@@ -18,6 +18,7 @@ class Program
             Console.WriteLine("4. Quit");
             Console.Write("Please select the number of the Activity you would like to select: ");
             userSelection = int.Parse(Console.ReadLine());
+            Console.Clear();
 
             //Breathing Activity Selected
             if(userSelection == 1)

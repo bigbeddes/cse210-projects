@@ -4,6 +4,7 @@ public class BaseActivity
     private string _activityName;
     private string _activityDescription;
     private int _activityDuration;
+    private Random _randomGenerator = new Random();
 
     public BaseActivity(string activityName, string activityDescription)
     {
@@ -91,8 +92,7 @@ public class BaseActivity
     public void RandomListSelector(List<int> index, List<string> list)
     {
         //Randomly pick a string list item that hasn't been used
-        Random randomGenerator = new Random();
-        int promptSelection = randomGenerator.Next(0,index.Count);
+        int promptSelection = _randomGenerator.Next(0,index.Count);
         Console.WriteLine(list[index[promptSelection]]);
         index.RemoveAt(promptSelection);
     }

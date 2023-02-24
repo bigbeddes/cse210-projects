@@ -49,6 +49,8 @@ public class Reflecting : BaseActivity
         }
 
         RandomListSelector(_promptsIndexes, _prompts);
+        Console.Write("Press the enter key when you are ready to reflect on the above question. ");
+        Console.ReadLine();
 
         //Does activity for designated duration and
         //Picks a random question that hasn't been used and refresh's the list if you've gone through them all. 
