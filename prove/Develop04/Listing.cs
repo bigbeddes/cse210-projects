@@ -38,6 +38,7 @@ public class Listing : BaseActivity
         RandomListSelector(_listIndex, _listPrompts);
         Console.Write("You may begin in...");
         CountDownAnimation(5);
+        Console.WriteLine("");
         
         DateTime startTime = DateTime.Now;
         DateTime futureTime = startTime.AddSeconds(GetDuration());
