@@ -45,7 +45,7 @@ class Program
             }
 
             //Catch if number entered is out of Range
-            else if (userSelection < 0 || userSelection > 4)
+            else if (userSelection < 1 || userSelection > 4)
             {
                 Console.WriteLine("The number you entered is not a selectable option, please try again.");
                 breathing.CountDownAnimation(5);
