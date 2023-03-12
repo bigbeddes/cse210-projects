@@ -174,7 +174,7 @@ public class FileManagement
     //iterates through the dictionary Keys and Loads them into a designated file
     public void SaveGoals()
     {
-        Console.WriteLine("Please enter the name of the file you would like to save this to in the GoalFiles folder:");
+        Console.WriteLine("Please enter the new name of the file you would like to save this goals list to in the Goals Folder:");
         string name= Console.ReadLine();
         _filename=@$"GoalFiles\{name}" ;
 
@@ -183,7 +183,7 @@ public class FileManagement
         {
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(_filename, true))
             {
-                file.WriteLine(_discription + "," + _goalType + "," + _repeatsNeeded + "," + _repeatsCompleted + "," + _minorPoints + "," + _completionPoints + "," + _goalPoints);
+                file.WriteLine(_goals[key]._discription + "," + _goals[key]._goalType + "," + _goals[key]._repeatsNeeded + "," + _goals[key]._repeatsCompleted + "," + _goals[key]._minorPoints + "," + _goals[key]._completionPoints + "," + _goals[key]._goalPoints);
             }
         }
     }
