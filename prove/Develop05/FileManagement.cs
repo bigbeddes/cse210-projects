@@ -174,9 +174,9 @@ public class FileManagement
     //iterates through the dictionary Keys and Loads them into a designated file
     public void SaveGoals()
     {
-        Console.WriteLine("Please enter the new name of the file you would like to save this goals list to in the Goals Folder:");
+        Console.WriteLine("Please enter the new name of the csv file you would like to save this goals list to in the Goals Folder:");
         string name= Console.ReadLine();
-        _filename=@$"GoalFiles\{name}" ;
+        _filename=@$"GoalFiles\{name}.csv" ;
 
         List<int> keys = GetKeyList();
         foreach (int key in keys)
@@ -194,7 +194,7 @@ public class FileManagement
         //designate file to open and save location to be pulled so we can save the modified dictionary to it later.
         Console.WriteLine("Please enter the name of the file you would like to open in the GoalFiles folder:");
         string name= Console.ReadLine();
-        _filename=@$"GoalFiles\{name}" ;
+        _filename=@$"GoalFiles\{name}.csv" ;
         //Read through selected file and build dictionary one line at a time
         string [] lines = System.IO.File.ReadAllLines(_filename);
         foreach (string line in lines)
@@ -241,7 +241,7 @@ public class FileManagement
             total += int.Parse(_goals[userKey]._minorPoints);
             _goals[userKey]._goalPoints = $"{total}";
         }
-        else if (_goals[userKey]._goalType=="Simple")
+        else if (_goals[userKey]._goalType== "Simple")
         {
             if (int.Parse(_goals[userKey]._repeatsCompleted) < 1)
             {
@@ -255,13 +255,12 @@ public class FileManagement
                     _goals[userKey]._goalPoints = $"{total}";
                     _goals[userKey]._repeatsCompleted=$"{report}";
                 }
+            }    
             else
             {
-                Console.Write("You have already completed this goal. Please choose a different option from the menu");
-                Thread.Sleep(6000);
-            }
-            }
-            
+                Console.Write("You have already completed this goal. Press enter to return to the main menu");
+                Console.ReadLine();
+            } 
         }
         else if (_goals[userKey]._goalType == "Checklist")
         {
@@ -290,8 +289,8 @@ public class FileManagement
             }
             else
             {
-                Console.Write("You have already completed this goal. Please choose a different option from the menu");
-                Thread.Sleep(6000);
+                Console.Write("You have already completed this goal. Press hit enter to return to the main menu");
+                Console.ReadLine();
             }
         }
     }
