@@ -8,7 +8,7 @@ public class SimpleGoal : IGoal
     {
         string completed = "[ ]";
         string end =$"Points to earn after completing goal: {completionPoints}.";
-        if (int.Parse(repeatsCompleted) > int.Parse(repeatsNeeded))
+        if (int.Parse(repeatsCompleted) >= int.Parse(repeatsNeeded))
         {
             completed = "[x]";
             end = $"Total points Earned: {goalPoints}.";

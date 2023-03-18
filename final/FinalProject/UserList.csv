@@ -1,0 +1,7 @@
+1,goodpassword,Ryan,Beddes,9000,0,Salary,ApplicationAdministrator,110,no,no,no,0,yes
+2,goodpassword,Bruce,Wayne,30,0,Hourly,BaseEmployee,110,no,no,no,0,yes
+3,goodpassword,Bruce,Banner,25,0,Hourly,BaseEmployee,210,no,no,no,0,yes
+4,goodpassword,Domas,Sabonis,1000,0,Salary,Manager,110,no,no,no,0,yes
+5,goodpassword,De'Aaron,Fox,9900,0,Salary,Manager,210,no,no,no,0,yes
+6,goodpassword,Mike,Brown,1100,0,Salary,HR,10,no,no,no,0,yes
+7,badpassword,Joe,Dirt,15,0,Hourly,BaseEmployee,110,no,no,no,0,no
