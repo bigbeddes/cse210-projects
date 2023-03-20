@@ -183,6 +183,14 @@ public class BaseFileManagement
 
     public void SaveUserListCSV()
     {
-        
+        List<int> keys = GetKeyList();
+        foreach (int key in keys)
+        {
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(_userListFilename, false))
+            {
+                file.WriteLine(_userDict[key]._userID + "," + _userDict[key]._userPassword + "," + _userDict[key]._firstName + "," + _userDict[key]._lastName + "," + _userDict[key]._rate + "," + _userDict[key]._payType + "," + _userDict[key]._hoursWorked + "," + _userDict[key]._userRole + "," + _userDict[key]._groupID + "," + _userDict[key]._timeSubmitted + "," + _userDict[key]._timeApproved + "," + _userDict[key]._timePaid + "," + _userDict[key]._monthEarnedAmount + "," + _userDict[key]._userActive);
+            }
+        }
     }
+    
 }
