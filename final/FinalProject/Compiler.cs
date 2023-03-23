@@ -4,7 +4,7 @@ public class Compiler
     private int _ID;
     private string _password;
     private string _fullName="";
-    private int _rate;
+    private float _rate;
     private int _hoursWorked;
     private string _payType;
     private string _userRole;
@@ -12,7 +12,7 @@ public class Compiler
     private string _timeSubmitted;
     private string _timeApproved;
     private string _timePaid;
-    private int _monthEarnedAmount;
+    private float _monthEarnedAmount;
     private string _userActive;
     private int _userSelection;
     private int USERPASSWORD=1;
@@ -133,15 +133,20 @@ public class Compiler
                 EnterTime();
             }
 
-            else if (_userSelection == 4)
+            else if (_userSelection == 2)
+            {
+                HR.PayTimesheets();
+            }
+
+            else if (_userSelection == 3)
             {
                 ChangePassword();
             }
-            else if (_userSelection == 5)
+            else if (_userSelection == 4)
             {
                 QuitMessage();
             }
-            InvalidMenuSelectionCheck(1, 5);
+            InvalidMenuSelectionCheck(1, 4);
 
         }
         while (_userSelection!=5);
@@ -158,7 +163,26 @@ public class Compiler
             {
                 EnterTime();
             }
-
+            else if (_userSelection == 2)
+            {
+                appAdmin.ReviewUserTimeStatus();
+            }
+            else if (_userSelection == 3)
+            {
+                appAdmin.AddNewUser();
+            }
+            else if (_userSelection == 4)
+            {
+                appAdmin.ChangeUserGroupOrRole();
+            }
+            else if (_userSelection == 5)
+            {
+                appAdmin.DeactivateUser();
+            }
+            else if (_userSelection == 6)
+            {
+                appAdmin.ResetUserPassword();
+            }
             else if (_userSelection == 7)
             {
                 ChangePassword();
@@ -184,15 +208,20 @@ public class Compiler
                 EnterTime();
             }
 
-            else if (_userSelection == 4)
+            else if (_userSelection == 2)
+            {
+                manager.approveTime(_groupID);
+            }
+
+            else if (_userSelection == 3)
             {
                 ChangePassword();
             }
-            else if (_userSelection == 5)
+            else if (_userSelection == 4)
             {
                 QuitMessage();
             }
-            InvalidMenuSelectionCheck(1, 5);
+            InvalidMenuSelectionCheck(1, 4);
 
         }
         while (_userSelection!=5);
@@ -250,7 +279,6 @@ public class Compiler
         Console.WriteLine("Please enter the Month you are submitting this timesheet for.");
         _timeSubmitted=Console.ReadLine();
         save.RelayChangeDictValue(_ID, TIMESUBMITTED,_timeSubmitted);
-        save.RelaySaveUserListCSV();
     }
     //Updates user password
     private void ChangePassword()
@@ -283,8 +311,6 @@ public class Compiler
         while (password1 != password2 && password1.Length < 8);
         //save new password to user list
         save.RelayChangeDictValue(_ID, USERPASSWORD, _password);
-        save.RelaySaveUserListCSV();
-
     }
     //Displays invalid menu selection
     private void InvalidMenuSelectionCheck(int one, int two)
@@ -298,6 +324,7 @@ public class Compiler
     //Display exit message
     private void QuitMessage()
     {
+        save.RelaySaveUserListCSV();
         Console.WriteLine("Thank you for using the Paperless Payroll Application. Have a great day!");
         Thread.Sleep(6000);
     }

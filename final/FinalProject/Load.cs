@@ -1,6 +1,9 @@
 using System;
 public class Load : BaseFileManagement
 {
+    private string _firstName;
+    private string _lastName;
+    private string _userGroupID;
     //converts User List Csv file into a User Dictionary
     public void LoadDict()
     {
@@ -21,6 +24,38 @@ public class Load : BaseFileManagement
     public bool CheckID(int key)
     {
         return IDCheck(key);
+    }
+
+    public List<int> RelayKeyList()
+    {
+        return GetKeyList();
+    }
+
+    public void DisplayKeysWithName()
+    {
+        Console.Write("Enter the users First Name: ");
+        _firstName=Console.ReadLine();
+        Console.Write("Enter the users Last Name: ");
+        _lastName=Console.ReadLine();
+        string compareFirstName;
+        string compareLastName;
+        List<int>usersMatch = new List<int>();
+        List<int>keys=GetKeyList();
+        foreach (int key in keys)
+        {
+            compareFirstName=GetValues(key, 2);
+            compareLastName=GetValues(key, 3);
+            if (compareFirstName == _firstName && compareLastName == _lastName)
+            {
+                usersMatch.Add(key);
+            }
+        }
+        Console.WriteLine("Users that match:");
+        foreach (int user in usersMatch)
+        {
+            _userGroupID=GetValues(user, 8);
+            Console.WriteLine($"User ID: {user}. User Name: {_firstName} {_lastName}. Group ID: {_userGroupID}");
+        }
     }
 
 }
