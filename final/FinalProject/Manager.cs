@@ -3,7 +3,6 @@ public class Manager : Employee
 {
     
     private List <int> _subordinates = new List<int>();
-    Database db = new Database();
     public Manager() : base()
     {}
     public Manager(string userRole, string groupID, int userID, string userPassword, string firstName, string lastName, string rate, string hoursWorked, string payType, string timeSubmitted, string timeApproved, string timePaid, string monthEarnedAmount, string userActive) : base(userRole, groupID, userID, userPassword, firstName, lastName, rate, hoursWorked, payType, timeSubmitted, timeApproved, timePaid, monthEarnedAmount, userActive)
@@ -48,22 +47,25 @@ public class Manager : Employee
         
         foreach (int user in userList)
         {
-            if (_groupID == db.GetDictValue(user, GROUPID))
+            if (db.GetDictValue(user,USERACTIVE) == "yes")
             {
-                Console.Clear();
-                Console.WriteLine($"User ID: {user}.");
-                Console.WriteLine($"User Name: {db.GetDictValue(user, FIRSTNAME)} {db.GetDictValue(user, LASTNAME)}.");
-                Console.WriteLine($"Pay Type: {db.GetDictValue(user, PAYTYPE)}.");
-                Console.WriteLine($"Hours Worked: {db.GetDictValue(user, HOURSWORKED)}.");
-                Console.WriteLine($"Pay Rate: ${db.GetDictValue(user, RATE)}.");
-                Console.WriteLine($"Money Earned for the Month: ${db.GetDictValue(user, MONTHEARNEDAMOUNT)}.");
-                Console.WriteLine($"Month Submitted for: {db.GetDictValue(user, TIMESUBMITTED)}.");
-                Console.WriteLine($"Last approved Month: {db.GetDictValue(user, TIMEAPPROVED)}.");
-                Console.WriteLine($"If you want to approve the subbmited timesheet enter 1 otherwise just hit enter");
-                SetSelection(int.Parse(Console.ReadLine()));
-                if (GetSelection() == 1)
+                if (_groupID == db.GetDictValue(user, GROUPID))
                 {
-                    db.ChangeDictValue(user, TIMEAPPROVED, SelectMonth("Enter the number of the Month you want to Approve the time for"));
+                    Console.Clear();
+                    Console.WriteLine($"User ID: {user}.");
+                    Console.WriteLine($"User Name: {db.GetDictValue(user, FIRSTNAME)} {db.GetDictValue(user, LASTNAME)}.");
+                    Console.WriteLine($"Pay Type: {db.GetDictValue(user, PAYTYPE)}.");
+                    Console.WriteLine($"Hours Worked: {db.GetDictValue(user, HOURSWORKED)}.");
+                    Console.WriteLine($"Pay Rate: ${db.GetDictValue(user, RATE)}.");
+                    Console.WriteLine($"Money Earned for the Month: ${db.GetDictValue(user, MONTHEARNEDAMOUNT)}.");
+                    Console.WriteLine($"Month Submitted for: {db.GetDictValue(user, TIMESUBMITTED)}.");
+                    Console.WriteLine($"Last approved Month: {db.GetDictValue(user, TIMEAPPROVED)}.");
+                    Console.Write($"If you want to approve the subbmited timesheet enter 1 otherwise enter 2: ");
+                    SetSelection(int.Parse(Console.ReadLine()));
+                    if (GetSelection() == 1)
+                    {
+                        db.ChangeDictValue(user, TIMEAPPROVED, SelectMonth("Enter the number of the Month you want to Approve the time for"));
+                    }
                 }
             }
         }
