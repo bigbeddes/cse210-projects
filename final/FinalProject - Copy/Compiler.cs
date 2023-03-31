@@ -57,7 +57,7 @@ public class Compiler
 
             // Checks if entered ID exists in the User List
             checkID=load.CheckID(_ID);
-            if (checkID==true)
+            if (checkID)
             {
                 Console.Write("Please endter your password: ");
                 _password = Console.ReadLine();
@@ -99,8 +99,8 @@ public class Compiler
             }
             else
             {
-            Console.WriteLine($"Entered ID - {_ID} does not exist.");
-            Thread.Sleep(5000);
+                Console.WriteLine($"Entered ID - {_ID} does not exist.");
+                Thread.Sleep(5000);
             }
             
             //If you fail to login on the 3rd attempt you will get this error.
@@ -116,7 +116,7 @@ public class Compiler
             }
             Console.Clear();
         }
-        while (repeatLoop == true);
+        while (repeatLoop);
         return _userRole;
     } 
 
@@ -210,7 +210,7 @@ public class Compiler
 
             else if (_userSelection == 2)
             {
-                manager.approveTime(_groupID);
+                manager.ApproveTime(_groupID);
             }
 
             else if (_userSelection == 3)

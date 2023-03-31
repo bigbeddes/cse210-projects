@@ -53,7 +53,7 @@ public class ApplicationAdministrator : IPosition
     {
         Console.Clear();
         Console.WriteLine("Create a new user:");
-        _ID=adminSave.UserIDGenerator();
+        _ID=adminLoad.RelayKeyList().Count +1;
         Console.Write("Enter new user First Name: ");
         _firstName=Console.ReadLine();
         Console.Write("Enter new user Last Name: ");

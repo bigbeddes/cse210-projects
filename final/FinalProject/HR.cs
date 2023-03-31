@@ -1,65 +1,71 @@
 using System;
-public class HR : IPosition
+public class HR : Employee
 {
-    Load hrLoad = new Load();
-    Save hrSave = new Save();
-    public int MainMenu()
+    Database db = new Database();
+    public HR() : base()
+    {}
+    public HR(string userRole, string groupID, int userID, string userPassword, string firstName, string lastName, string rate, string hoursWorked, string payType, string timeSubmitted, string timeApproved, string timePaid, string monthEarnedAmount, string userActive) : base(userRole, groupID, userID, userPassword, firstName, lastName, rate, hoursWorked, payType, timeSubmitted, timeApproved, timePaid, monthEarnedAmount, userActive)
+    {}
+    
+    public override bool RunMenu()
     {
-        int userSelection=0;
-        Console.WriteLine("1. Enter time worked for the month and submit for approval.");
+        MainMenuHeader();
+        Console.WriteLine("1 Enter time worked for the month and submit for approval.");
         Console.WriteLine("2 Submit approved timesheets to be paid.");
         Console.WriteLine("3 Update your password.");
         Console.WriteLine("4 Save changes and logout.");
-        userSelection=int.Parse(Console.ReadLine()); 
+        SetSelection(int.Parse(Console.ReadLine()));
 
-        return userSelection;
+        switch (GetSelection())
+        {
+            case 1:
+                EnterTime();
+                break;
+            case 2:
+                PayTime();
+                break;
+            case 3:
+                ChangePassword(_userID);
+                break;
+            case 4:
+                SetRepeat(false);
+                break;
+            default:
+                Console.WriteLine("User Selection was outside of the range of the Menu options. Please select a number from the menu...");
+                Thread.Sleep(6000);
+                break;
+        }
+        return GetRepeat();
     }
 
-    public void PayTimesheets()
+    private void PayTime()
     {
-        List<int> userList= hrLoad.RelayKeyList();
-        string userGroupID;
-        string userFirstName;
-        string userLastName;
-        string payType;
-        string hoursWorked;
-        string rate;
-        string timeSubmitted;
-        string monthEarnedAmount;
-        string timeApproved;
-        string timePaid;
-        int userEntry;
+        
+        //iterate through all user keys and print their time info if their group ID matches the managers.
+        List<int> userList= db.GetKeyList();
+        
         foreach (int user in userList)
         {
-            Console.Clear();
-            userFirstName = hrLoad.GetValue(user, 2);
-            userLastName = hrLoad.GetValue(user, 3);
-            userGroupID = hrLoad.GetValue(user, 8);
-            payType = hrLoad.GetValue(user, 6);
-            hoursWorked = hrLoad.GetValue(user, 5);
-            rate = hrLoad.GetValue(user, 4);
-            timeSubmitted = hrLoad.GetValue(user, 9);
-            monthEarnedAmount = hrLoad.GetValue(user, 12);
-            timeApproved = hrLoad.GetValue(user, 10);
-            timePaid=hrLoad.GetValue(user, 11);
-
-            Console.WriteLine($"User ID: {user}.");
-            Console.WriteLine($"User Name: {userFirstName} {userLastName}.");
-            Console.WriteLine($"User Department ID: {userGroupID}.");
-            Console.WriteLine($"Pay Type: {payType}.");
-            Console.WriteLine($"Hours Worked: {hoursWorked}.");
-            Console.WriteLine($"Pay Rate: ${rate}.");
-            Console.WriteLine($"Money Earned for the Month: ${monthEarnedAmount}.");
-            Console.WriteLine($"Month Submitted for: {timeSubmitted}.");
-            Console.WriteLine($"Last approved Month: {timeApproved}.");
-            Console.WriteLine($"Last paid Month: {timePaid}.");
-            Console.WriteLine($"If you want pay for the approved time sheet enter 1 otherwise enter 0");
-            userEntry=int.Parse(Console.ReadLine());
-            if (userEntry == 1)
+            if (_groupID == db.GetDictValue(user, GROUPID))
             {
-                hrSave.RelayChangeDictValue(user, 11, timeApproved);
+                Console.Clear();
+                Console.WriteLine($"User ID: {user}.");
+                Console.WriteLine($"User Name: {db.GetDictValue(user, FIRSTNAME)} {db.GetDictValue(user, LASTNAME)}.");
+                Console.WriteLine($"Pay Type: {db.GetDictValue(user, PAYTYPE)}.");
+                Console.WriteLine($"Hours Worked: {db.GetDictValue(user, HOURSWORKED)}.");
+                Console.WriteLine($"Pay Rate: ${db.GetDictValue(user, RATE)}.");
+                Console.WriteLine($"Money Earned for the Month: ${db.GetDictValue(user, MONTHEARNEDAMOUNT)}.");
+                Console.WriteLine($"Month Submitted for: {db.GetDictValue(user, TIMESUBMITTED)}.");
+                Console.WriteLine($"Last approved Month: {db.GetDictValue(user, TIMEAPPROVED)}.");
+                Console.WriteLine($"Last Paid Month: {db.GetDictValue(user, TIMEPAID)}.");
+                Console.WriteLine($"If you want to pay the approved timesheet enter 1 otherwise just hit enter");
+                SetSelection(int.Parse(Console.ReadLine()));
+                if (GetSelection() == 1)
+                {
+                    db.ChangeDictValue(user, TIMEPAID, SelectMonth("Enter the number of the Month you want to Pay the time for"));
+                }
             }
         }
     }
-
+    
 }

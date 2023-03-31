@@ -1,63 +1,69 @@
- using System;
-public class Manager : IPosition
+using System;
+public class Manager : Employee
 {
-    Load manLoad = new Load();
-    Save manSave = new Save();
+    
+    private List <int> _subordinates = new List<int>();
+    Database db = new Database();
+    public Manager() : base()
+    {}
+    public Manager(string userRole, string groupID, int userID, string userPassword, string firstName, string lastName, string rate, string hoursWorked, string payType, string timeSubmitted, string timeApproved, string timePaid, string monthEarnedAmount, string userActive) : base(userRole, groupID, userID, userPassword, firstName, lastName, rate, hoursWorked, payType, timeSubmitted, timeApproved, timePaid, monthEarnedAmount, userActive)
+    {}
 
-    public int MainMenu()
+    public override bool RunMenu()
     {
-        int userSelection=0;
-        Console.WriteLine("1. Enter time worked for the month and submit for approval.");
+        MainMenuHeader();
+        Console.WriteLine("1 Enter time worked for the month and submit for approval.");
         Console.WriteLine("2 approve time of employees in group.");
         Console.WriteLine("3 Update your password.");
         Console.WriteLine("4 Save changes and logout.");
-        userSelection=int.Parse(Console.ReadLine());
-
-        return userSelection;
+        SetSelection(int.Parse(Console.ReadLine()));
+            
+        switch (GetSelection())
+        {
+            case 1:
+                EnterTime();
+                break;
+            case 2:
+                ApproveTime();
+                break;
+            case 3:
+                ChangePassword(_userID);
+                break;
+            case 4:
+                SetRepeat(false);
+                break;
+            default:
+                Console.WriteLine("User Selection was outside of the range of the Menu options. Please select a number from the menu...");
+                Thread.Sleep(6000);
+                break;
+        }
+        return GetRepeat();
     }
 
-    public void approveTime(int groupID)
+    private void ApproveTime()
     {
         
         //iterate through all user keys and print their time info if their group ID matches the managers.
-        List<int> userList= manLoad.RelayKeyList();
-        int userGroupID;
-        string userFirstName;
-        string userLastName;
-        string payType;
-        string hoursWorked;
-        string rate;
-        string timeSubmitted;
-        string monthEarnedAmount;
-        string timeApproved;
-        string userEntry;
+        List<int> userList= db.GetKeyList();
+        
         foreach (int user in userList)
         {
-            userGroupID = int.Parse(manLoad.GetValue(user, 8));
-            if (userGroupID==groupID)
+            if (_groupID == db.GetDictValue(user, GROUPID))
             {
                 Console.Clear();
-                userFirstName = manLoad.GetValue(user, 2);
-                userLastName = manLoad.GetValue(user, 3);
-                payType = manLoad.GetValue(user, 6);
-                hoursWorked = manLoad.GetValue(user, 5);
-                rate = manLoad.GetValue(user, 4);
-                timeSubmitted = manLoad.GetValue(user, 9);
-                monthEarnedAmount = manLoad.GetValue(user, 12);
-                timeApproved = manLoad.GetValue(user, 10);
                 Console.WriteLine($"User ID: {user}.");
-                Console.WriteLine($"User Name: {userFirstName} {userLastName}.");
-                Console.WriteLine($"Pay Type: {payType}.");
-                Console.WriteLine($"Hours Worked: {hoursWorked}.");
-                Console.WriteLine($"Pay Rate: ${rate}.");
-                Console.WriteLine($"Money Earned for the Month: ${monthEarnedAmount}.");
-                Console.WriteLine($"Month Submitted for: {timeSubmitted}.");
-                Console.WriteLine($"Last approved Month: {timeApproved}.");
+                Console.WriteLine($"User Name: {db.GetDictValue(user, FIRSTNAME)} {db.GetDictValue(user, LASTNAME)}.");
+                Console.WriteLine($"Pay Type: {db.GetDictValue(user, PAYTYPE)}.");
+                Console.WriteLine($"Hours Worked: {db.GetDictValue(user, HOURSWORKED)}.");
+                Console.WriteLine($"Pay Rate: ${db.GetDictValue(user, RATE)}.");
+                Console.WriteLine($"Money Earned for the Month: ${db.GetDictValue(user, MONTHEARNEDAMOUNT)}.");
+                Console.WriteLine($"Month Submitted for: {db.GetDictValue(user, TIMESUBMITTED)}.");
+                Console.WriteLine($"Last approved Month: {db.GetDictValue(user, TIMEAPPROVED)}.");
                 Console.WriteLine($"If you want to approve the subbmited timesheet enter 1 otherwise just hit enter");
-                userEntry=Console.ReadLine();
-                if (userEntry == "1")
+                SetSelection(int.Parse(Console.ReadLine()));
+                if (GetSelection() == 1)
                 {
-                    manSave.RelayChangeDictValue(user, 10, timeSubmitted);
+                    db.ChangeDictValue(user, TIMEAPPROVED, SelectMonth("Enter the number of the Month you want to Approve the time for"));
                 }
             }
         }
