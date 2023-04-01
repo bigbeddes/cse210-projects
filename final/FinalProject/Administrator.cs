@@ -117,7 +117,7 @@ public class Administrator : Employee
         _newUserRole=db.GetDictValue(_newUserID, USERROLE);
         _newGroupID=db.GetDictValue(_newUserID, GROUPID);
 
-        Console.WriteLine($"Current Role: {_newUserID}. Current Group ID: {_newGroupID}");
+        Console.WriteLine($"Current Role: {_newUserRole}. Current Group ID: {_newGroupID}");
         Console.WriteLine($"Choose a number from the following:\n1 Change Role\n2 Chage Group ID.\n3 Change Both.");
         do
         {
@@ -147,11 +147,11 @@ public class Administrator : Employee
     {
         Console.Clear();
         NameOrID("Deactivate User");
-        Console.WriteLine("Enter 1 if you want to deactivate the user. Just hit enter to leave them active.");
+        Console.WriteLine("Enter 1 if you want to deactivate the user. Enter 2 to leave them active.");
         SetSelection(int.Parse(Console.ReadLine()));
         if (GetSelection() == 1)
         {
-            db.ChangeDictValue(_newUserID, USERID, "no");
+            db.ChangeDictValue(_newUserID, USERACTIVE, "no");
             Console.WriteLine("User has been deactivated. Please log out to save changes.");
             Thread.Sleep(5000);
         }

@@ -1,7 +1,7 @@
 using System;
 public class Employee
 {
-    //attributes
+    //dictionary attributes
     public string _userRole;
     public string _groupID;
     public int _userID;
@@ -16,11 +16,10 @@ public class Employee
     public string _timePaid;
     public string _monthEarnedAmount;
     public string _userActive;
-    
+
     //attribute indexes
     protected int USERROLE = 0;
     protected int GROUPID = 1;
-    protected int USERID = 2;
     protected int USERPASSWORD = 3;
     protected int FIRSTNAME = 4;
     protected int LASTNAME = 5;
@@ -36,7 +35,7 @@ public class Employee
     private int _userSelection = 0;
     private bool _repeat = true;
     //dictionary database
-    Database db = new Database();
+    public Database db = new  Database();
     public Employee()
     {}
     //constructor to set up user dictionary
@@ -98,7 +97,7 @@ public class Employee
     public void EnterTime()
     {
         Console.Clear();
-        Console.WriteLine($"name:{_firstName} {_lastName}");
+        Console.WriteLine($"name: {_firstName} {_lastName}");
         Console.WriteLine($"Last Reported Month: {_timeSubmitted}");
         Console.WriteLine($"Last Reported Hours Worked: {_hoursWorked}");
         Console.WriteLine($"Last Reported Total earned: ${_monthEarnedAmount}");
@@ -112,7 +111,15 @@ public class Employee
             db.ChangeDictValue(_userID, TIMESUBMITTED, SelectMonth("Enter the number of the Month you want to update your time for"));
             Console.Write("Enter how many hours you worked durring the Month you are updating: ");
             db.ChangeDictValue(_userID, HOURSWORKED, $"{int.Parse(Console.ReadLine())}");
-            db.ChangeDictValue(_userID, MONTHEARNEDAMOUNT, $"{Math.Round((float.Parse(db.GetDictValue(_userID, RATE)))*(float.Parse(db.GetDictValue(_userID, HOURSWORKED))), 2)}");
+            switch (_payType)
+            {
+                case "Hourly":
+                    db.ChangeDictValue(_userID, MONTHEARNEDAMOUNT, $"{Math.Round((float.Parse(_rate))*(float.Parse(_hoursWorked)), 2)}");
+                    break;
+                case "Salary":
+                    db.ChangeDictValue(_userID, MONTHEARNEDAMOUNT, $"{Math.Round(float.Parse(_rate), 2)}");
+                    break;
+            }
         }
 
     }
@@ -145,7 +152,7 @@ public class Employee
                 Thread.Sleep(3000);
             }
         }
-        while (password1 != password2 && password1.Length < 8);
+        while (password1 != password2 || password1.Length < 8);
         //save new password to user list
         db.ChangeDictValue(key, USERPASSWORD, password1);
 
@@ -222,103 +229,4 @@ public class Employee
         return month;
     }
 
-    public void SetAttribute(int index, string attribute)
-    {
-        switch (index)
-        {
-            case 0:
-                _userRole = attribute;
-                break;
-            case 1:
-                _groupID = attribute;
-                break;
-            case 2:
-                _userID = int.Parse(attribute);
-                break;
-                case 3:
-                _userPassword = attribute;
-                break;
-            case 4:
-                _firstName = attribute;
-                break;
-            case 5:
-                _lastName = attribute;
-                break;
-            case 6:
-                _rate = attribute;
-                break;
-            case 7:
-                _payType = attribute;
-                break;
-            case 8:
-                _hoursWorked = attribute;
-                break;
-            case 9:
-                _timeSubmitted = attribute;
-                break;
-            case 10:
-                _timeApproved = attribute;
-                break;
-            case 11:
-                _timePaid = attribute;
-                break;
-            case 12:
-                _monthEarnedAmount = attribute;
-                break;
-            case 13:
-                _userActive = attribute;
-                break;
-        }
-    }
-
-    public string GetAttribute(int index)
-    {
-        string value="";
-        switch (index)
-        {
-            case 0:
-                value=_userRole;
-                break;
-            case 1:
-                value = _groupID;
-                break;
-            case 2:
-                value = $"{_userID}";
-                break;
-                case 3:
-                value = _userPassword;
-                break;
-            case 4:
-                value = _firstName;
-                break;
-            case 5:
-                value = _lastName;
-                break;
-            case 6:
-                value = _rate;
-                break;
-            case 7:
-                value = _payType;
-                break;
-            case 8:
-                value = _hoursWorked;
-                break;
-            case 9:
-                value = _timeSubmitted;
-                break;
-            case 10:
-                value = _timeApproved;
-                break;
-            case 11:
-                value = _timePaid;
-                break;
-            case 12:
-                value = _monthEarnedAmount;
-                break;
-            case 13:
-                value = _userActive;
-                break;
-        }
-        return value;
-    }
 }
