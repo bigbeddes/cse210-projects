@@ -9,7 +9,7 @@ public class Database
     private int LASTNAME = 5;
     
     private Dictionary<int, Employee> _userDict = new Dictionary<int, Employee>();
- 
+    //loads the CSV userlist file into the dictionary and is ran durring UserLogin.
     public void ConvertCsvFileToDict()
     {
         string [] lines = System.IO.File.ReadAllLines(_userListFilename);
@@ -19,8 +19,8 @@ public class Database
             AddToUserDict(parts);
         }
     }
-
-     public void AddToUserDict(string [] parts)
+    //This is used in ConvertCsvFileToDict and Save New user to add users into the current dictionary session.
+     private void AddToUserDict(string [] parts)
     {
         int key=int.Parse(parts[2]);
         switch (parts[0])
@@ -43,12 +43,13 @@ public class Database
                 break;
         }
     }
-
-    public bool IDCheck(int key)
+    //used in UserLogin, but could also be applied to the administrator search name or ID field or HR when adding additional methods
+    //but would need to switch from private to public if that was explored.
+    private bool IDCheck(int key)
     {
         return _userDict.ContainsKey(key);
     }
-
+    //Used any time a user needs to iterate through all user ID's.
     public List<int> GetKeyList()
     {
         List<int> keys = new List<int>();
@@ -59,7 +60,8 @@ public class Database
             }
         return keys;
     }
-
+    //Done after a successfull login and when the user selects to logout and save. reffrenced in Program.cs
+    //The first line will overwrite the csv user list file and then each additional line will just append.
     public void FinalSave()
     {
         List<int> keys = GetKeyList();
@@ -84,7 +86,7 @@ public class Database
             counter+=1;
         }
     }
-
+    //Login option refrenced in Program.cs
     public Employee UserLogin()
     {
         int loginAttempt=0;
@@ -154,7 +156,7 @@ public class Database
         
         return g;
     }
-
+    //Used to change a dictionary value like updating time or changing user fields.
     public void ChangeDictValue(int key, int position, string newValue)
     {
         switch (position)
@@ -204,7 +206,7 @@ public class Database
                 break;
         }
     }
-
+    //Used to display current dictionary values typically of other users for 3 child employee classes.
     public string GetDictValue(int key, int position)
     {
         string value="";
@@ -256,7 +258,8 @@ public class Database
         }
         return value;
     }
-
+    //Currently used in Adminstrator to display matches to first name and last name and select the ID you 
+    //want to work on. could be added to HR if mentioned additional functionality is added at a later time.
     public int DisplayKeysWithNames()
     {
         int value;
@@ -282,7 +285,7 @@ public class Database
         value = int.Parse(Console.ReadLine());
         return value;
     }
-
+    //Adds a new user to the dictionary, only used in the Administrator class.
     public void SaveNewUser(string userRole, string groupID, string userID, string userPassword, string firstName, string lastName, string rate, string hoursWorked, string payType, string timeSubmitted, string timeApproved, string timePaid, string monthEarnedAmount, string userActive)
     {
         string[] g = new string[]{userRole, groupID, userID, userPassword, firstName, lastName, rate, payType, hoursWorked, timeSubmitted, timeApproved, timePaid, monthEarnedAmount, userActive};

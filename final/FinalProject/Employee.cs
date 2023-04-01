@@ -157,7 +157,7 @@ public class Employee
         db.ChangeDictValue(key, USERPASSWORD, password1);
 
     }
-
+    
     public void SetSelection(int selection)
     {
         _userSelection = selection;

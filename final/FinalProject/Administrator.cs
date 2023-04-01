@@ -1,6 +1,8 @@
 using System;
 public class Administrator : Employee
 {
+    //attributes needed to create new users and change admin fields for other users. Without these, 
+    //the current user fields will change to what you are doing for a different user.
     bool selectionCheck = true; 
     private string _newUserRole;
     private string _newGroupID;
@@ -20,7 +22,7 @@ public class Administrator : Employee
     {}
     public Administrator(string userRole, string groupID, int userID, string userPassword, string firstName, string lastName, string rate, string hoursWorked, string payType, string timeSubmitted, string timeApproved, string timePaid, string monthEarnedAmount, string userActive) : base(userRole, groupID, userID, userPassword, firstName, lastName, rate, hoursWorked, payType, timeSubmitted, timeApproved, timePaid, monthEarnedAmount, userActive)
     {}
-
+    //admin main menu
     public override bool RunMenu()
     {
         MainMenuHeader();
@@ -63,7 +65,7 @@ public class Administrator : Employee
         }
         return GetRepeat();
     }
-
+    //add new user to the user list dictionary/database
     public void AddNewUser()
     {
         Console.Clear();
@@ -109,7 +111,7 @@ public class Administrator : Employee
 
         db.SaveNewUser(_newUserRole, _newGroupID, $"{_newUserID}", _newUserPassword, _newFirstName, _newLastName, _newRate, _newHoursWorked, _newPayType, _newTimeSubmitted, _newTimeApproved, _newTimePaid, _newMonthEarnedAmount, _newUserActive);
     }
-
+    //allows admin to change users role or permisions in case they transfer to a different department or promote
     public void ChangeUserGroupOrRole()
     {
         Console.Clear();
@@ -142,7 +144,7 @@ public class Administrator : Employee
                 break;
         }
     }
-
+    //for if someone is fired or quit. an additional feature that could be added here is for rehires to change back to active.
     public void DeactivateUser()
     {
         Console.Clear();
@@ -157,14 +159,14 @@ public class Administrator : Employee
         }
         
     }
-
+    //access the change password option for a user that forgot their password.
     public void ResetUserPassword()
     {
         Console.Clear();
         NameOrID("Change Selected User Password");
         ChangePassword(_newUserID);
     }
-
+    // Used in all the admin options and give ability to look up user by name instead of ID.
     private void NameOrID(string selectionString)
     {
         Console.Clear();
@@ -188,7 +190,7 @@ public class Administrator : Employee
                 break;
         }
     }
-
+    // Used to change Group ID in ChangeUserGroupOrRole
     private void SetGroupID()
     {
         Console.WriteLine("10 - Human Resources");
@@ -213,7 +215,7 @@ public class Administrator : Employee
         }
         while (selectionCheck == true);
     }
-
+    // Used to change User Role in ChangeUserGroupOrRole.
     private void SetUserRole()
     {
         Console.WriteLine("Select the number of the Role you want to apply to the user:");

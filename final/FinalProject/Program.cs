@@ -22,9 +22,6 @@ class Program
             while (run);
             db.FinalSave();
         }
-        
-        
-        
         Console.WriteLine("Thank you for using the Payroll Application.");
         Thread.Sleep(4000);
     }

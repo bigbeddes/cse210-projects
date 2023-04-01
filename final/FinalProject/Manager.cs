@@ -7,7 +7,7 @@ public class Manager : Employee
     {}
     public Manager(string userRole, string groupID, int userID, string userPassword, string firstName, string lastName, string rate, string hoursWorked, string payType, string timeSubmitted, string timeApproved, string timePaid, string monthEarnedAmount, string userActive) : base(userRole, groupID, userID, userPassword, firstName, lastName, rate, hoursWorked, payType, timeSubmitted, timeApproved, timePaid, monthEarnedAmount, userActive)
     {}
-
+    //Manager Menu
     public override bool RunMenu()
     {
         MainMenuHeader();
@@ -38,7 +38,8 @@ public class Manager : Employee
         }
         return GetRepeat();
     }
-
+    //Iterates through each Employee that matches the current users Group ID regardless of role
+    // and asks to approve the time or not.
     private void ApproveTime()
     {
         

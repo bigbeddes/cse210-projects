@@ -1,12 +1,11 @@
 using System;
 public class HR : Employee
 {
-    Database db = new Database();
     public HR() : base()
     {}
     public HR(string userRole, string groupID, int userID, string userPassword, string firstName, string lastName, string rate, string hoursWorked, string payType, string timeSubmitted, string timeApproved, string timePaid, string monthEarnedAmount, string userActive) : base(userRole, groupID, userID, userPassword, firstName, lastName, rate, hoursWorked, payType, timeSubmitted, timeApproved, timePaid, monthEarnedAmount, userActive)
     {}
-    
+    //HR Menu
     public override bool RunMenu()
     {
         MainMenuHeader();
@@ -37,7 +36,14 @@ public class HR : Employee
         }
         return GetRepeat();
     }
-
+    //Iterates through every employee and shows timecard info and asks to pay or not.
+    //An additional feature could be to not only change the month on the TimePaid field,
+    //but to also then file the 3 Time fields, Hours Worked, PayType and Month earned amount
+    // into a timecard folder with the folders matching the group ID and subfolder
+    //matching the UserID, with a filename of the year and user ID to store all timecards for each year. 
+    //This would probably then require a new class to handle those functions
+    //As a record display for the Employee menu would probably be wanted to show how much has
+    //been earned to date.
     private void PayTime()
     {
         
@@ -46,7 +52,7 @@ public class HR : Employee
         
         foreach (int user in userList)
         {
-            if (_groupID == db.GetDictValue(user, GROUPID))
+            if (db.GetDictValue(user,USERACTIVE) == "yes")
             {
                 Console.Clear();
                 Console.WriteLine($"User ID: {user}.");
@@ -58,7 +64,7 @@ public class HR : Employee
                 Console.WriteLine($"Month Submitted for: {db.GetDictValue(user, TIMESUBMITTED)}.");
                 Console.WriteLine($"Last approved Month: {db.GetDictValue(user, TIMEAPPROVED)}.");
                 Console.WriteLine($"Last Paid Month: {db.GetDictValue(user, TIMEPAID)}.");
-                Console.WriteLine($"If you want to pay the approved timesheet enter 1 otherwise just hit enter");
+                Console.WriteLine($"If you want to pay the approved timesheet enter 1 otherwise enter 2");
                 SetSelection(int.Parse(Console.ReadLine()));
                 if (GetSelection() == 1)
                 {
@@ -67,5 +73,9 @@ public class HR : Employee
             }
         }
     }
-    
+    //an additional method would also be easy to add and desired to allow a HR role employee
+    //to change the Salary/Hourly field and update the rate. 
+
+    //Another nice method would be to allow the HR role employee to update a users Hours worked
+    // time submitted and approved fields for if a user is off on an extended leave of absense.
 }
