@@ -7,7 +7,7 @@ public class Database
     private int GROUPID = 1;
     private int FIRSTNAME = 4;
     private int LASTNAME = 5;
-
+    
     private Dictionary<int, Employee> _userDict = new Dictionary<int, Employee>();
  
     public void ConvertCsvFileToDict()
@@ -285,10 +285,6 @@ public class Database
 
     public void SaveNewUser(string userRole, string groupID, string userID, string userPassword, string firstName, string lastName, string rate, string hoursWorked, string payType, string timeSubmitted, string timeApproved, string timePaid, string monthEarnedAmount, string userActive)
     {
-        using (System.IO.StreamWriter file = new System.IO.StreamWriter(_userListFilename, true))
-        {
-            file.WriteLine(userRole + "," + groupID + "," + userID + "," + userPassword + "," + firstName + "," + lastName + "," + rate + "," + payType + "," + hoursWorked + "," + timeSubmitted + "," + timeApproved + "," + timePaid + "," + monthEarnedAmount + "," + userActive);
-        }
         string[] g = new string[]{userRole, groupID, userID, userPassword, firstName, lastName, rate, payType, hoursWorked, timeSubmitted, timeApproved, timePaid, monthEarnedAmount, userActive};
         AddToUserDict(g);
     }

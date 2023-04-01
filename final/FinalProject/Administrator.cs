@@ -2,7 +2,20 @@ using System;
 public class Administrator : Employee
 {
     bool selectionCheck = true; 
-
+    private string _newUserRole;
+    private string _newGroupID;
+    private int _newUserID;
+    private string _newUserPassword;
+    private string _newFirstName;
+    private string _newLastName;
+    private string _newRate;
+    private string _newPayType;
+    private string _newHoursWorked;
+    private string _newTimeSubmitted;
+    private string _newTimeApproved;
+    private string _newTimePaid;
+    private string _newMonthEarnedAmount;
+    private string _newUserActive;
     public Administrator() : base()
     {}
     public Administrator(string userRole, string groupID, int userID, string userPassword, string firstName, string lastName, string rate, string hoursWorked, string payType, string timeSubmitted, string timeApproved, string timePaid, string monthEarnedAmount, string userActive) : base(userRole, groupID, userID, userPassword, firstName, lastName, rate, hoursWorked, payType, timeSubmitted, timeApproved, timePaid, monthEarnedAmount, userActive)
@@ -55,23 +68,23 @@ public class Administrator : Employee
     {
         Console.Clear();
         Console.WriteLine("Create a new user:");
-        _userID=db.GetKeyList().Count +1;
+        _newUserID=db.GetKeyList().Count +1;
         Console.Write("Enter new user First Name: ");
-        _firstName=Console.ReadLine();
+        _newFirstName=Console.ReadLine();
         Console.Write("Enter new user Last Name: ");
-        _lastName=Console.ReadLine();
-        _userPassword=$"{_userID}{_firstName}{_lastName}";
-        if (_userPassword.Length < 8)
+        _newLastName=Console.ReadLine();
+        _newUserPassword=$"{_newUserID}{_newFirstName}{_newLastName}";
+        if (_newUserPassword.Length < 8)
         {
             do
             {
-                _userPassword += "0";
+                _newUserPassword += "0";
             }
-            while(_userPassword.Length < 8);
+            while(_newUserPassword.Length < 8);
         }
         Console.Write("Enter the pay rate the new user will have: ");
-        _rate=$"{float.Parse(Console.ReadLine())}";
-        _hoursWorked="0";
+        _newRate=$"{float.Parse(Console.ReadLine())}";
+        _newHoursWorked="0";
         Console.Write("If new user is Salary enter 1, if they are Hourly enter 2: ");
         do
         {
@@ -80,31 +93,31 @@ public class Administrator : Employee
         while (GetSelection() < 1 || GetSelection() > 2);
         if (GetSelection()==1)
         {
-            _payType="Salary";
+            _newPayType="Salary";
         }
         else if (GetSelection()==2)
         {
-            _payType="Hourly";
+            _newPayType="Hourly";
         }
         SetUserRole();
         SetGroupID();
-        _timeSubmitted="no";
-        _timeApproved="no";
-        _timePaid="no";
-        _monthEarnedAmount="0";
-        _userActive="yes";
+        _newTimeSubmitted="no";
+        _newTimeApproved="no";
+        _newTimePaid="no";
+        _newMonthEarnedAmount="0";
+        _newUserActive="yes";
 
-        db.SaveNewUser(_userRole, _groupID, $"{_userID}", _userPassword, _firstName, _lastName, _rate, _hoursWorked, _payType, _timeSubmitted, _timeApproved, _timePaid, _monthEarnedAmount, _userActive);
+        db.SaveNewUser(_newUserRole, _newGroupID, $"{_newUserID}", _newUserPassword, _newFirstName, _newLastName, _newRate, _newHoursWorked, _newPayType, _newTimeSubmitted, _newTimeApproved, _newTimePaid, _newMonthEarnedAmount, _newUserActive);
     }
 
     public void ChangeUserGroupOrRole()
     {
         Console.Clear();
         NameOrID("Change Role or Permission");
-        _userRole=db.GetDictValue(_userID, USERROLE);
-        _groupID=db.GetDictValue(_userID, GROUPID);
+        _newUserRole=db.GetDictValue(_newUserID, USERROLE);
+        _newGroupID=db.GetDictValue(_newUserID, GROUPID);
 
-        Console.WriteLine($"Current Role: {_userRole}. Current Group ID: {_groupID}");
+        Console.WriteLine($"Current Role: {_newUserID}. Current Group ID: {_newGroupID}");
         Console.WriteLine($"Choose a number from the following:\n1 Change Role\n2 Chage Group ID.\n3 Change Both.");
         do
         {
@@ -115,17 +128,17 @@ public class Administrator : Employee
         {
             case 1:
                 SetUserRole();
-                db.ChangeDictValue(_userID, USERROLE, _userRole);
+                db.ChangeDictValue(_newUserID, USERROLE, _newUserRole);
                 break;
             case 2:
                 SetGroupID();
-                db.ChangeDictValue(_userID, GROUPID, _groupID);
+                db.ChangeDictValue(_newUserID, GROUPID, _newGroupID);
                 break;
             case 3:
                 SetUserRole();
-                db.ChangeDictValue(_userID, USERROLE, _userRole);
+                db.ChangeDictValue(_newUserID, USERROLE, _newUserRole);
                 SetGroupID();
-                db.ChangeDictValue(_userID, GROUPID, _groupID);
+                db.ChangeDictValue(_newUserID, GROUPID, _newGroupID);
                 break;
         }
     }
@@ -138,7 +151,7 @@ public class Administrator : Employee
         SetSelection(int.Parse(Console.ReadLine()));
         if (GetSelection() == 1)
         {
-            db.ChangeDictValue(_userID, USERID, "no");
+            db.ChangeDictValue(_newUserID, USERID, "no");
             Console.WriteLine("User has been deactivated. Please log out to save changes.");
             Thread.Sleep(5000);
         }
@@ -149,7 +162,7 @@ public class Administrator : Employee
     {
         Console.Clear();
         NameOrID("Change Selected User Password");
-        ChangePassword(_userID);
+        ChangePassword(_newUserID);
     }
 
     private void NameOrID(string selectionString)
@@ -164,9 +177,14 @@ public class Administrator : Employee
         }
         while (GetSelection() < 1 || GetSelection() > 2);
 
-        if (GetSelection() == 2)
+        switch (GetSelection())
         {
-            _userID = db.DisplayKeysWithNames();
+            case 1:
+                _newUserID=int.Parse(Console.ReadLine());
+                break;
+            case 2:
+                _newUserID = db.DisplayKeysWithNames();
+                break;
         }
     }
 
@@ -184,7 +202,7 @@ public class Administrator : Employee
             if (GetSelection() == 10 || GetSelection() == 110 || GetSelection() == 210 || GetSelection() == 310)
             {
                 selectionCheck=false;
-                _groupID=$"{GetSelection()}";
+                _newGroupID=$"{GetSelection()}";
             }
             else
             {
@@ -210,20 +228,18 @@ public class Administrator : Employee
         switch (GetSelection())
         {
             case 1:
-                _userRole="HR";
+                _newUserRole="HR";
                 break;
             case 2:
-                _userRole="Administrator";
+                _newUserRole="Administrator";
                 break;
             case 3:
-                _userRole="Manager";
+                _newUserRole="Manager";
                 break;
             case 4:
-                _userRole="Employee";
+                _newUserRole="Employee";
                 break;
         }
-
-
     }
 
 }
