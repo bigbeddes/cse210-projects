@@ -8,10 +8,11 @@ class Program
         Console.Clear();
 
         // Authenticates and Authorizes user through login process.
-        Database db = new Database();
 
-        //repeats logged in user menu until logout and save is selected
+        Database db= new Database();
         Employee currentUser = db.UserLogin();
+        currentUser.db=db;
+        //repeats logged in user menu until logout and save is selected
         if (currentUser != null)
         {
             do

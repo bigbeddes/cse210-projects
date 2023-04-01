@@ -166,7 +166,7 @@ public class Database
                 _userDict[key]._groupID=newValue;
                 break;
             case 3:
-                _userDict[key]._userPassword=newValue;
+                 _userDict[key]._userPassword=newValue;
                 break;
             case 4:
                 _userDict[key]._firstName=newValue;
@@ -257,12 +257,6 @@ public class Database
         return value;
     }
 
-    public Employee LoadDifferentUser(int userID)
-    {
-        Employee g= _userDict[userID];
-        return g;
-    }
-
     public int DisplayKeysWithNames()
     {
         int value;
@@ -293,11 +287,10 @@ public class Database
     {
         using (System.IO.StreamWriter file = new System.IO.StreamWriter(_userListFilename, true))
         {
-            file.WriteLine(userRole + "," + groupID + "," + userID + "," + userPassword + "," + firstName + "," + lastName + "," + rate + "," + hoursWorked + "," + payType + "," + timeSubmitted + "," + timeApproved + "," + timePaid + "," + monthEarnedAmount + "," + userActive);
+            file.WriteLine(userRole + "," + groupID + "," + userID + "," + userPassword + "," + firstName + "," + lastName + "," + rate + "," + payType + "," + hoursWorked + "," + timeSubmitted + "," + timeApproved + "," + timePaid + "," + monthEarnedAmount + "," + userActive);
         }
-        string[] g = new string[]{userRole, groupID, userID, userPassword, firstName, lastName, rate, hoursWorked, payType, timeSubmitted, timeApproved, timePaid, monthEarnedAmount, userActive};
+        string[] g = new string[]{userRole, groupID, userID, userPassword, firstName, lastName, rate, payType, hoursWorked, timeSubmitted, timeApproved, timePaid, monthEarnedAmount, userActive};
         AddToUserDict(g);
     }
-    
     
 }

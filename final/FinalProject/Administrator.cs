@@ -1,8 +1,8 @@
 using System;
 public class Administrator : Employee
 {
-    bool selectionCheck = true;
-    Database db = new Database();
+    bool selectionCheck = true; 
+
     public Administrator() : base()
     {}
     public Administrator(string userRole, string groupID, int userID, string userPassword, string firstName, string lastName, string rate, string hoursWorked, string payType, string timeSubmitted, string timeApproved, string timePaid, string monthEarnedAmount, string userActive) : base(userRole, groupID, userID, userPassword, firstName, lastName, rate, hoursWorked, payType, timeSubmitted, timeApproved, timePaid, monthEarnedAmount, userActive)
@@ -72,7 +72,7 @@ public class Administrator : Employee
         Console.Write("Enter the pay rate the new user will have: ");
         _rate=$"{float.Parse(Console.ReadLine())}";
         _hoursWorked="0";
-        Console.Write("If new user is Salary enter 1, if they are Hourly enter 2");
+        Console.Write("If new user is Salary enter 1, if they are Hourly enter 2: ");
         do
         {
             SetSelection(int.Parse(Console.ReadLine()));
@@ -88,9 +88,9 @@ public class Administrator : Employee
         }
         SetUserRole();
         SetGroupID();
-        _timeSubmitted="nul";
-        _timeApproved="nul";
-        _timePaid="nul";
+        _timeSubmitted="no";
+        _timeApproved="no";
+        _timePaid="no";
         _monthEarnedAmount="0";
         _userActive="yes";
 
