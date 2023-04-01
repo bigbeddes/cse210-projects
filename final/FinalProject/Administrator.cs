@@ -180,6 +180,7 @@ public class Administrator : Employee
         switch (GetSelection())
         {
             case 1:
+                Console.Write("Enter the ID: ");
                 _newUserID=int.Parse(Console.ReadLine());
                 break;
             case 2:
